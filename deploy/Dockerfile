@@ -18,7 +18,11 @@ RUN apk add --no-cache git ca-certificates
 # Which service under services/<SERVICE> to build. Each exposes cmd/server.
 ARG SERVICE=gateway
 
-# The go workspace + all modules (services import the shared module locally).
+# Build via each module's go.mod + replace directives, independent of the
+# workspace (matches CI; avoids go.work listing not-yet-present modules).
+ENV GOWORK=off
+
+# All modules: the target service imports the shared module locally.
 COPY go.work ./
 COPY services ./services
 

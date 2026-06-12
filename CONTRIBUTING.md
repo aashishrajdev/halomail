@@ -17,7 +17,7 @@ add new functionality.
 proto/        API contracts — the source of truth. Code is generated from here.
 services/     One Go module per service + a shared platform library.
 apps/web      Next.js 15 frontend.
-apps/docs     Fumadocs documentation.
+apps/docs     Documentation site (in-house, no external framework).
 packages/     Generated TypeScript SDK.
 deploy/       Dockerfiles + infra.
 ```

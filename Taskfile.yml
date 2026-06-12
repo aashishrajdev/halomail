@@ -49,21 +49,25 @@ tasks:
       - buf format -w
 
   # ---- Database ----
+  # Each service owns its goose version table (goose_<service>) so version
+  # numbers never collide in a shared database.
   migrate:
-    desc: Apply DB migrations (goose)
-    dir: "{{.API_DIR}}"
+    desc: Apply every service's DB migrations
     cmds:
-      - goose -dir migrations postgres "$DATABASE_URL" up
+      - goose -dir services/identity/migrations -table goose_identity postgres "$DATABASE_URL" up
+      - goose -dir services/scheduling/migrations -table goose_scheduling postgres "$DATABASE_URL" up
   migrate:down:
-    desc: Roll back one migration
-    dir: "{{.API_DIR}}"
+    desc: Roll back the last migration for SVC — task migrate:down SVC=scheduling
+    vars:
+      SVC: '{{.SVC | default "identity"}}'
     cmds:
-      - goose -dir migrations postgres "$DATABASE_URL" down
+      - goose -dir services/{{.SVC}}/migrations -table goose_{{.SVC}} postgres "$DATABASE_URL" down
   migrate:new:
-    desc: Create a migration — task migrate:new -- name_here
-    dir: "{{.API_DIR}}"
+    desc: New migration for SVC — task migrate:new SVC=identity -- add_thing
+    vars:
+      SVC: '{{.SVC | default "identity"}}'
     cmds:
-      - goose -dir migrations create {{.CLI_ARGS}} sql
+      - goose -dir services/{{.SVC}}/migrations create {{.CLI_ARGS}} sql
 
   # ---- Backend ----
   api:run:
@@ -94,7 +98,7 @@ tasks:
     cmds:
       - pnpm --filter @halolink/web dev
   docs:
-    desc: Run the Fumadocs site
+    desc: Run the docs site
     cmds:
       - pnpm --filter @halolink/docs dev
   sdk:gen:

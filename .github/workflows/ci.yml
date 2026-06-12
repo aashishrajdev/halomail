@@ -23,6 +23,10 @@ jobs:
   go:
     name: go build & test
     runs-on: ubuntu-latest
+    # Build each module via its own go.mod + replace directives, not the
+    # workspace — go.work only lists modules that exist locally.
+    env:
+      GOWORK: "off"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -52,6 +56,6 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       - run: pnpm install
       - run: pnpm lint

@@ -110,7 +110,7 @@ go run ./cmd/server
 
 ```bash
 task web         # Next.js dashboard → http://localhost:3000
-task docs        # Fumadocs site     → http://localhost:3001
+task docs        # docs site         → http://localhost:3001
 ```
 
 ## 8. Quality gates

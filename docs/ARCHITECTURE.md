@@ -1,7 +1,7 @@
 # Architecture
 
 HaloLink is a **monorepo** of **modular Go microservices** behind a single public
-**gateway**, with a Next.js frontend and a Fumadocs site. This document explains
+**gateway**, with a Next.js frontend and an in-house documentation site. This document explains
 the boundaries, data flow, and the design decisions that keep it cheap to run.
 
 ## Principles

@@ -45,8 +45,8 @@ theme designer, and first-class OpenTelemetry observability.
 ## How it's built
 
 A **monorepo** of independent, modular Go microservices that share a common
-platform library and speak ConnectRPC, plus a Next.js 15 frontend and a Fumadocs
-site. It runs either as **one container** (cheap/free deploy) or as **separate
+platform library and speak ConnectRPC, plus a Next.js 15 frontend and an in-house
+docs site. It runs either as **one container** (cheap/free deploy) or as **separate
 services** (scale-out) — same code, a build-time choice. See
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -54,14 +54,14 @@ services** (scale-out) — same code, a build-time choice. See
 proto/        API contracts (source of truth)
 services/     Go services: gateway, identity, scheduling, contact, template, notification + shared lib
 apps/web/     Next.js 15 dashboard, marketing, public booking + contact pages
-apps/docs/    Fumadocs documentation site
+apps/docs/    In-house documentation site (raw now, docs engine later)
 packages/     generated TypeScript SDK
 deploy/       Dockerfiles, infra configs, free-tier deploy
 ```
 
 | Backend | Protocol | Data | Email | Frontend | Docs | Observability |
 | ------- | -------- | ---- | ----- | -------- | ---- | ------------- |
-| Go 1.24 | ConnectRPC | PostgreSQL + Redis | Resend | Next.js 15 · Tailwind · shadcn/ui · Geist | Fumadocs | OpenTelemetry · slog · health checks |
+| Go 1.24 | ConnectRPC | PostgreSQL + Redis | Resend | Next.js 15 · Tailwind · shadcn/ui · Geist | In-house docs | OpenTelemetry · slog · health checks |
 
 ## Requirements
 
