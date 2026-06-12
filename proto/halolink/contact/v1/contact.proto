@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+package halolink.contact.v1;
+
+import "google/protobuf/timestamp.proto";
+import "halolink/common/v1/common.proto";
+
+enum FieldType {
+  FIELD_TYPE_UNSPECIFIED = 0;
+  FIELD_TYPE_TEXT = 1;
+  FIELD_TYPE_EMAIL = 2;
+  FIELD_TYPE_TEXTAREA = 3;
+  FIELD_TYPE_SELECT = 4;
+  FIELD_TYPE_NUMBER = 5;
+}
+
+enum SpamProtection {
+  SPAM_PROTECTION_UNSPECIFIED = 0;
+  SPAM_PROTECTION_NONE = 1;
+  SPAM_PROTECTION_HONEYPOT = 2;
+  SPAM_PROTECTION_RECAPTCHA = 3;
+}
+
+message FormField {
+  string name = 1;
+  string label = 2;
+  FieldType type = 3;
+  bool required = 4;
+  string placeholder = 5;
+  repeated string options = 6;
+}
+
+// Form is an embeddable contact form configuration.
+message Form {
+  string id = 1;
+  string owner_id = 2;
+  string name = 3;
+  string slug = 4;
+  // Address that submissions are forwarded to.
+  string target_email = 5;
+  SpamProtection spam_protection = 6;
+  // Where the browser is redirected after a successful submit (optional).
+  string redirect_url = 7;
+  repeated FormField fields = 8;
+  bool active = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message Message {
+  string id = 1;
+  string form_id = 2;
+  string owner_id = 3;
+  string sender_name = 4;
+  string sender_email = 5;
+  // Submitted field values keyed by FormField.name.
+  map<string, string> data = 6;
+  string ip = 7;
+  string user_agent = 8;
+  double spam_score = 9;
+  bool is_spam = 10;
+  bool read = 11;
+  google.protobuf.Timestamp created_at = 12;
+}
+
+// ---------------------------------------------------------------------------
+// FormService
+// ---------------------------------------------------------------------------
+
+service FormService {
+  rpc CreateForm(CreateFormRequest) returns (CreateFormResponse);
+  rpc GetForm(GetFormRequest) returns (GetFormResponse);
+  rpc ListForms(ListFormsRequest) returns (ListFormsResponse);
+  rpc UpdateForm(UpdateFormRequest) returns (UpdateFormResponse);
+  rpc DeleteForm(DeleteFormRequest) returns (DeleteFormResponse);
+}
+
+message CreateFormRequest {
+  string name = 1;
+  string slug = 2;
+  string target_email = 3;
+  SpamProtection spam_protection = 4;
+  string redirect_url = 5;
+  repeated FormField fields = 6;
+}
+message CreateFormResponse {
+  Form form = 1;
+}
+
+message GetFormRequest {
+  // Lookup by id, or by slug for the public embed.
+  string id = 1;
+  string slug = 2;
+}
+message GetFormResponse {
+  Form form = 1;
+}
+
+message ListFormsRequest {}
+message ListFormsResponse {
+  repeated Form forms = 1;
+}
+
+message UpdateFormRequest {
+  string id = 1;
+  string name = 2;
+  string target_email = 3;
+  SpamProtection spam_protection = 4;
+  string redirect_url = 5;
+  repeated FormField fields = 6;
+  bool active = 7;
+}
+message UpdateFormResponse {
+  Form form = 1;
+}
+
+message DeleteFormRequest {
+  string id = 1;
+}
+message DeleteFormResponse {}
+
+// ---------------------------------------------------------------------------
+// MessageService
+// ---------------------------------------------------------------------------
+
+service MessageService {
+  // SubmitMessage is public: called by the embedded widget / REST / SDK.
+  rpc SubmitMessage(SubmitMessageRequest) returns (SubmitMessageResponse);
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse);
+  rpc GetMessage(GetMessageRequest) returns (GetMessageResponse);
+  rpc MarkRead(MarkReadRequest) returns (MarkReadResponse);
+  rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse);
+}
+
+message SubmitMessageRequest {
+  string form_slug = 1;
+  string sender_name = 2;
+  string sender_email = 3;
+  map<string, string> data = 4;
+  // Honeypot field — must be empty for a legitimate submission.
+  string honeypot = 5;
+}
+message SubmitMessageResponse {
+  string id = 1;
+  bool accepted = 2;
+  string redirect_url = 3;
+}
+
+message ListMessagesRequest {
+  string form_id = 1;
+  bool unread_only = 2;
+  halolink.common.v1.PageRequest page = 3;
+}
+message ListMessagesResponse {
+  repeated Message messages = 1;
+  halolink.common.v1.PageResponse page = 2;
+}
+
+message GetMessageRequest {
+  string id = 1;
+}
+message GetMessageResponse {
+  Message message = 1;
+}
+
+message MarkReadRequest {
+  string id = 1;
+  bool read = 2;
+}
+message MarkReadResponse {}
+
+message DeleteMessageRequest {
+  string id = 1;
+}
+message DeleteMessageResponse {}

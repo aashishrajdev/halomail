@@ -1,0 +1,34 @@
+# Render blueprint for the HaloLink backend (monolith mode), free plan.
+# Set secret env vars (DATABASE_URL, JWT_SECRET, RESEND_API_KEY, …) in the
+# Render dashboard — they are intentionally not in this file.
+services:
+  - type: web
+    name: halolink-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: HTTP_PORT
+        value: "8080"
+      - key: LOG_FORMAT
+        value: json
+      - key: OTEL_ENABLED
+        value: "true"
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: PUBLIC_API_URL
+        sync: false
+      - key: PUBLIC_WEB_URL
+        sync: false

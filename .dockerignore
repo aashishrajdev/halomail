@@ -1,0 +1,18 @@
+# Keep the backend build context small — only Go sources are needed.
+.git
+.github
+.data
+.vscode
+.claude
+node_modules
+**/node_modules
+apps
+packages
+docs
+*.md
+**/*.md
+.env
+.env.*
+**/.next
+**/dist
+**/bin

@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "golang.go",
+    "bufbuild.vscode-buf",
+    "biomejs.biome",
+    "bradlc.vscode-tailwindcss",
+    "ms-azuretools.vscode-docker"
+  ]
+}

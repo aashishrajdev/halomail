@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  proto:
+    name: proto lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: buf lint
+      - run: buf format --diff --exit-code
+
+  go:
+    name: go build & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate code from proto
+        run: buf generate
+      - name: Vet & test each Go module
+        run: |
+          set -euo pipefail
+          for d in services/*/ ; do
+            if [ -f "${d}go.mod" ]; then
+              echo "::group::${d}"
+              ( cd "$d" && go mod tidy && go vet ./... && go test ./... -race -count=1 )
+              echo "::endgroup::"
+            fi
+          done
+
+  web:
+    name: js lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: pnpm install
+      - run: pnpm lint

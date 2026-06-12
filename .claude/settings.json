@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go version *)",
+      "Bash(pnpm --version)",
+      "Bash(docker --version)",
+      "Bash(buf --version)",
+      "Bash(git --version)",
+      "PowerShell(Write-Output \"=== GO ===\"; \\(Get-Command go -ErrorAction SilentlyContinue\\).Source; go version 2>&1; Write-Output \"=== COREPACK/PNPM ===\"; \\(Get-Command corepack -ErrorAction SilentlyContinue\\).Source; Write-Output \"=== GIT STATE ===\"; git -C \"d:\\\\Personal\\\\Projects\\\\halomail\" status --short --branch 2>&1; git -C \"d:\\\\Personal\\\\Projects\\\\halomail\" remote -v 2>&1; Write-Output \"=== README ===\"; Get-Content \"d:\\\\Personal\\\\Projects\\\\halomail\\\\README.md\" -Raw)",
+      "Bash(corepack enable *)",
+      "Bash(corepack prepare *)",
+      "Bash(npm install *)"
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+# Task runner — https://taskfile.dev
+# Install: go install github.com/go-task/task/v3/cmd/task@latest
+version: "3"
+
+dotenv: [".env"]
+
+vars:
+  API_DIR: services/api
+
+tasks:
+  default:
+    desc: List tasks
+    cmds:
+      - task --list
+
+  bootstrap:
+    desc: Install all JS deps + Go deps
+    cmds:
+      - pnpm install
+      - cd {{.API_DIR}} && go mod download
+
+  # ---- Infra ----
+  up:
+    desc: Start Postgres, Redis, Mailpit, Jaeger
+    cmds:
+      - docker compose up -d
+  down:
+    desc: Stop infra
+    cmds:
+      - docker compose down
+  nuke:
+    desc: Stop infra and delete volumes
+    cmds:
+      - docker compose down -v
+      - rm -rf .data
+
+  # ---- Proto ----
+  proto:
+    desc: Generate Go + TS code from proto
+    cmds:
+      - buf generate
+  proto:lint:
+    desc: Lint proto
+    cmds:
+      - buf lint
+  proto:fmt:
+    desc: Format proto
+    cmds:
+      - buf format -w
+
+  # ---- Database ----
+  migrate:
+    desc: Apply DB migrations (goose)
+    dir: "{{.API_DIR}}"
+    cmds:
+      - goose -dir migrations postgres "$DATABASE_URL" up
+  migrate:down:
+    desc: Roll back one migration
+    dir: "{{.API_DIR}}"
+    cmds:
+      - goose -dir migrations postgres "$DATABASE_URL" down
+  migrate:new:
+    desc: Create a migration — task migrate:new -- name_here
+    dir: "{{.API_DIR}}"
+    cmds:
+      - goose -dir migrations create {{.CLI_ARGS}} sql
+
+  # ---- Backend ----
+  api:run:
+    desc: Run the API server
+    dir: "{{.API_DIR}}"
+    cmds:
+      - go run ./cmd/server
+  api:build:
+    desc: Build the API binary
+    dir: "{{.API_DIR}}"
+    cmds:
+      - go build -o bin/halolink-api ./cmd/server
+  api:test:
+    desc: Run Go tests
+    dir: "{{.API_DIR}}"
+    cmds:
+      - go test ./... -race -count=1
+  api:lint:
+    desc: Vet + golangci-lint
+    dir: "{{.API_DIR}}"
+    cmds:
+      - go vet ./...
+      - golangci-lint run
+
+  # ---- Frontend ----
+  web:
+    desc: Run the Next.js web app
+    cmds:
+      - pnpm --filter @halolink/web dev
+  docs:
+    desc: Run the Fumadocs site
+    cmds:
+      - pnpm --filter @halolink/docs dev
+  sdk:gen:
+    desc: Regenerate the TS SDK from proto
+    cmds:
+      - buf generate
+      - pnpm --filter @halolink/sdk build
+
+  # ---- Dev (everything) ----
+  dev:
+    desc: Infra up + API + web together
+    deps: [up]
+    cmds:
+      - echo "Infra up. Run 'task api:run' and 'task web' in separate terminals."
