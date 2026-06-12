@@ -18,8 +18,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Add gateway, scheduling, contact, template, notification as they land.
-        service: [identity]
+        # gateway is the monolith (all services in one image) — the deploy
+        # target. Individual services can be added for distributed mode.
+        service: [gateway]
     steps:
       - uses: actions/checkout@v4
 
