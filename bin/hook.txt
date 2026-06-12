@@ -1,0 +1,1 @@
+booking.created|sha256=4511095035aaf325b18f892a1d5a2d6204410cc7b3f00a5e6593c5770ed98697|{"booking_id":"bkg_demo","invitee":"grace@example.com","start":"2026-06-15T09:00:00Z"}

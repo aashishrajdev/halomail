@@ -1,0 +1,43 @@
+package themes
+
+import (
+	"strings"
+	"testing"
+
+	"github.com/aashishrajdev/halomail/services/template/internal/domain"
+)
+
+func TestRenderBuiltins(t *testing.T) {
+	vars := map[string]string{"heading": "Booked!", "body": "See you Monday."}
+	for _, k := range domain.BuiltinThemes {
+		subj, htmlOut := Render(k, "Hi {{name}}", map[string]string{"name": "Grace", "heading": vars["heading"], "body": vars["body"]})
+		if subj != "Hi Grace" {
+			t.Errorf("%s: subject substitution = %q", k, subj)
+		}
+		if !strings.Contains(htmlOut, "Booked!") {
+			t.Errorf("%s: rendered HTML missing heading", k)
+		}
+		if !strings.HasPrefix(htmlOut, "<!doctype html>") {
+			t.Errorf("%s: not a full HTML doc", k)
+		}
+	}
+}
+
+func TestRenderCustomEscapes(t *testing.T) {
+	_, out := RenderCustom(`<div>{{name}}</div>`, "s", map[string]string{"name": "<script>"})
+	if strings.Contains(out, "<script>") {
+		t.Fatalf("custom render did not escape variable: %q", out)
+	}
+}
+
+func TestThemesGallery(t *testing.T) {
+	all := Themes()
+	if len(all) != len(domain.BuiltinThemes) {
+		t.Fatalf("gallery has %d themes, want %d", len(all), len(domain.BuiltinThemes))
+	}
+	for _, ti := range all {
+		if ti.PreviewHTML == "" || ti.Name == "" {
+			t.Errorf("theme %s missing preview/name", ti.Kind)
+		}
+	}
+}

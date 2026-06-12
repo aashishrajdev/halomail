@@ -4,4 +4,7 @@ use (
 	./services/shared
 	./services/identity
 	./services/scheduling
+	./services/contact
+	./services/template
+	./services/notification
 )
