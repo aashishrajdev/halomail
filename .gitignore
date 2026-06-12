@@ -30,8 +30,9 @@ next-env.d.ts
 *.key
 service-account*.json
 
-# ---- Editors / OS ----
+# ---- Editors / OS / local agent ----
 .idea/
+.claude/
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
