@@ -23,7 +23,8 @@ export function SiteFooter() {
         <FooterCol
           title="Developers"
           links={[
-            ["Docs", "https://github.com/aashishrajdev/halomail"],
+            ["Docs", "/docs/index.html"],
+            ["Add to your site", "/docs/integrate.html"],
             ["API keys", "/dashboard/api-keys"],
             ["Status", "#"],
           ]}

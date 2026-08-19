@@ -54,8 +54,23 @@
     overflow-y: auto; padding: 28px 18px; border-right: 1px solid var(--border);
   }
   aside .group { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 18px 8px 8px; }
-  aside a { display: block; padding: 6px 10px; border-radius: 7px; color: var(--muted); font-size: 14px; }
-  aside a:hover { background: var(--elev); color: var(--text); }
+  /* Transparent border in the resting state so the hover border does not
+     shift the text by a pixel. */
+  aside a { display: block; padding: 6px 10px; border-radius: 7px; color: var(--muted);
+    font-size: 14px; border: 1px solid transparent; transition: background 120ms ease, border-color 120ms ease, color 120ms ease; }
+  aside a:hover, aside a:focus-visible {
+    background: var(--elev); border-color: var(--border); color: var(--text); outline: none;
+  }
+  /* Section currently on screen — set by the scrollspy below. Accent-tinted so
+     it stays distinct from the plain hover box, in both themes. */
+  aside a.active {
+    background: color-mix(in srgb, var(--accent) 14%, var(--elev));
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    color: var(--accent);
+    font-weight: 500;
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+  aside a.active:hover { color: var(--accent); }
   main { padding: 44px 48px 120px; min-width: 0; }
 
   /* Hero */
@@ -113,6 +128,7 @@
   <div class="brand"><span class="dot"></span> HaloMail <span class="muted" style="font-weight:400">docs</span></div>
   <nav class="nav">
     <a href="#quickstart">Quickstart</a>
+    <a href="integrate.html">Add to your site</a>
     <a href="#api">API</a>
     <a href="#selfhost">Self-host</a>
     <a href="https://github.com/aashishrajdev/halomail" target="_blank" rel="noopener">GitHub ↗</a>
@@ -126,6 +142,7 @@
     <a href="#intro">Introduction</a>
     <a href="#quickstart">Quickstart</a>
     <a href="#auth">Authentication</a>
+    <a href="integrate.html">Add to your site &rarr;</a>
     <div class="group">Concepts</div>
     <a href="#services">Services</a>
     <a href="#scheduling">Scheduling</a>
@@ -325,6 +342,44 @@ docker run -p 8080:8080 --env-file .env halomail</code></pre>
     root.setAttribute("data-theme", next);
     localStorage.setItem("hl-theme", next);
   });
+  // Scrollspy: box the sidebar link whose section is currently on screen.
+  const spyLinks = [...document.querySelectorAll('aside a[href^="#"]')];
+  const spyTargets = spyLinks
+    .map((a) => ({ link: a, el: document.getElementById(decodeURIComponent(a.hash.slice(1))) }))
+    .filter((t) => t.el);
+
+  if (spyTargets.length) {
+    // Matches html { scroll-padding-top } so the highlight flips exactly when a
+    // heading settles under the sticky header.
+    const OFFSET = 90;
+    let queued = false;
+
+    const sync = () => {
+      queued = false;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      let current = spyTargets[0];
+      if (atBottom) {
+        current = spyTargets[spyTargets.length - 1];
+      } else {
+        for (const t of spyTargets) {
+          if (t.el.getBoundingClientRect().top <= OFFSET) current = t;
+        }
+      }
+      for (const t of spyTargets) t.link.classList.toggle("active", t === current);
+    };
+
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(sync);
+    };
+
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    sync();
+  }
+
   // Copy buttons on code blocks.
   document.querySelectorAll("pre").forEach((pre) => {
     const b = document.createElement("button");

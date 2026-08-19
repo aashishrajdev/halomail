@@ -16,12 +16,9 @@ export function SiteHeader() {
           <nav className="hidden gap-6 text-sm text-muted-foreground md:flex">
             <Link href="/features" className="transition-colors hover:text-foreground">Features</Link>
             <Link href="/pricing" className="transition-colors hover:text-foreground">Pricing</Link>
-            <a
-              href="https://github.com/aashishrajdev/halomail"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-foreground"
-            >
+            {/* Static page copied from apps/docs by scripts/copy-docs.mjs, so it
+                is a plain <a>, not a Next route. */}
+            <a href="/docs/integrate.html" className="transition-colors hover:text-foreground">
               Docs
             </a>
           </nav>
