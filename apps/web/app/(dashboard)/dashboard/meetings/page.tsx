@@ -20,7 +20,7 @@ function statusLabel(s: string) {
 }
 
 export default function MeetingsPage() {
-  const { data, loading, error } = useRpc<{ bookings?: Booking[] }>("halolink.scheduling.v1.BookingService/ListBookings");
+  const { data, loading, error } = useRpc<{ bookings?: Booking[] }>("halomail.scheduling.v1.BookingService/ListBookings");
   const bookings = data?.bookings ?? [];
 
   return (

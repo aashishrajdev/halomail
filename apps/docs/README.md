@@ -1,6 +1,6 @@
 # apps/docs
 
-Documentation for HaloLink.
+Documentation for HaloMail.
 
 ## Now: raw static page
 
@@ -19,9 +19,9 @@ python -m http.server 3001  # → http://localhost:3001
 
 No build step, no framework — intentionally "raw and real" for now.
 
-## Roadmap: HaloLink's own docs engine
+## Roadmap: HaloMail's own docs engine
 
-This page is the seed of a **home-grown documentation product** — a HaloLink SaaS
+This page is the seed of a **home-grown documentation product** — a HaloMail SaaS
 surface that works like a docs engine (search, versioning, navigation, API
 reference generated from the proto/OpenAPI), built in-house rather than adopting
 an external framework. The raw page stays the source of truth for content until

@@ -11,8 +11,8 @@ import (
 
 	"connectrpc.com/connect"
 
-	commonv1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/common/v1"
-	identityv1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/identity/v1"
+	commonv1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/common/v1"
+	identityv1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/identity/v1"
 
 	"github.com/aashishrajdev/halomail/services/identity/internal/app"
 	"github.com/aashishrajdev/halomail/services/shared/connectutil"

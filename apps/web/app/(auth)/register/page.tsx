@@ -28,7 +28,7 @@ export default function RegisterPage() {
     setError(null);
     setLoading(true);
     try {
-      const res = await rpc<RegisterResponse>("halolink.identity.v1.AuthService/Register", { name, email, password });
+      const res = await rpc<RegisterResponse>("halomail.identity.v1.AuthService/Register", { name, email, password });
       saveSession(res.session.accessToken, res.user);
       router.push("/dashboard");
     } catch (err) {

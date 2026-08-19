@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	schedulingv1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/scheduling/v1"
+	schedulingv1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/scheduling/v1"
 
 	"github.com/aashishrajdev/halomail/services/scheduling/internal/domain"
 )

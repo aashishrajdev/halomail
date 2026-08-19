@@ -2,8 +2,8 @@
 // the dashboard demo; swap for httpOnly cookies in production.
 "use client";
 
-const TOKEN_KEY = "halolink_token";
-const USER_KEY = "halolink_user";
+const TOKEN_KEY = "halomail_token";
+const USER_KEY = "halomail_user";
 
 export interface SessionUser {
   id: string;

@@ -76,9 +76,9 @@ func (w *Worker) deliver(ctx context.Context, d domain.Delivery) {
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "HaloLink-Webhooks/1")
-	req.Header.Set("X-HaloLink-Event", d.Event)
-	req.Header.Set("X-HaloLink-Signature", "sha256="+sign(wh.Secret, body))
+	req.Header.Set("User-Agent", "HaloMail-Webhooks/1")
+	req.Header.Set("X-HaloMail-Event", d.Event)
+	req.Header.Set("X-HaloMail-Signature", "sha256="+sign(wh.Secret, body))
 
 	resp, err := w.client.Do(req)
 	code := 0

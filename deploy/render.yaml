@@ -1,9 +1,9 @@
-# Render blueprint for the HaloLink backend (monolith mode), free plan.
+# Render blueprint for the HaloMail backend (monolith mode), free plan.
 # Set secret env vars (DATABASE_URL, JWT_SECRET, RESEND_API_KEY, …) in the
 # Render dashboard — they are intentionally not in this file.
 services:
   - type: web
-    name: halolink-api
+    name: halomail-api
     runtime: docker
     plan: free
     dockerfilePath: ./deploy/Dockerfile

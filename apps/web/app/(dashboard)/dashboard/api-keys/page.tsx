@@ -1,7 +1,7 @@
 "use client";
 
-import { Copy, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Check, Copy, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,19 +22,33 @@ interface ApiKey {
 }
 
 export default function ApiKeysPage() {
-  const { data, loading, reload } = useRpc<{ keys?: ApiKey[] }>("halolink.identity.v1.ApiKeyService/ListApiKeys");
+  const { data, loading, reload } = useRpc<{ keys?: ApiKey[] }>("halomail.identity.v1.ApiKeyService/ListApiKeys");
   const [name, setName] = useState("");
   const [secret, setSecret] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
   const keys = data?.keys ?? [];
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(t);
+  }, [copied]);
+
+  async function copySecret() {
+    if (!secret) return;
+    await navigator.clipboard.writeText(secret);
+    setCopied(true);
+  }
 
   async function create(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
     setBusy(true);
     try {
-      const res = await rpc<{ secret: string }>("halolink.identity.v1.ApiKeyService/CreateApiKey", { name, scopes: [] }, getToken());
+      const res = await rpc<{ secret: string }>("halomail.identity.v1.ApiKeyService/CreateApiKey", { name, scopes: [] }, getToken());
       setSecret(res.secret);
+      setCopied(false);
       setName("");
       reload();
     } finally {
@@ -43,22 +57,28 @@ export default function ApiKeysPage() {
   }
 
   async function revoke(id: string) {
-    await rpc("halolink.identity.v1.ApiKeyService/RevokeApiKey", { id }, getToken());
+    await rpc("halomail.identity.v1.ApiKeyService/RevokeApiKey", { id }, getToken());
     reload();
   }
 
   return (
     <>
-      <PageHeader title="API keys" description="Authenticate server-to-server requests to the HaloLink API." />
+      <PageHeader title="API keys" description="Authenticate server-to-server requests to the HaloMail API." />
 
       {secret && (
         <Card className="mb-6 border-brand/40 bg-brand/5 p-4">
           <p className="text-sm font-medium">Copy your key now — it won't be shown again.</p>
           <div className="mt-2 flex items-center gap-2">
             <code className="flex-1 truncate rounded-md bg-background px-3 py-2 font-mono text-sm">{secret}</code>
-            <Button size="icon" variant="outline" onClick={() => navigator.clipboard.writeText(secret)} aria-label="Copy">
-              <Copy className="size-4" />
+            <Button size="icon" variant="outline" onClick={copySecret} aria-label={copied ? "Copied" : "Copy"}>
+              {copied ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4" />}
             </Button>
+            <span
+              aria-live="polite"
+              className={`text-xs text-emerald-500 transition-opacity ${copied ? "opacity-100" : "opacity-0"}`}
+            >
+              Copied to clipboard
+            </span>
           </div>
         </Card>
       )}

@@ -27,7 +27,7 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      const res = await rpc<LoginResponse>("halolink.identity.v1.AuthService/Login", { email, password });
+      const res = await rpc<LoginResponse>("halomail.identity.v1.AuthService/Login", { email, password });
       saveSession(res.session.accessToken, res.user);
       router.push("/dashboard");
     } catch (err) {
@@ -41,7 +41,7 @@ export default function LoginPage() {
     <Card>
       <CardHeader>
         <CardTitle className="text-xl">Welcome back</CardTitle>
-        <CardDescription>Log in to your HaloLink dashboard.</CardDescription>
+        <CardDescription>Log in to your HaloMail dashboard.</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-4">

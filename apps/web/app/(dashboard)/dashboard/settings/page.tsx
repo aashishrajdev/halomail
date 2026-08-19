@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select } from "@/components/ui/select";
 import { rpc } from "@/lib/api";
 import { getToken, saveSession, getUser } from "@/lib/auth";
+import { localTimezone, timezones } from "@/lib/timezones";
 import { useRpc } from "@/lib/use-rpc";
 
 interface User {
@@ -19,13 +21,19 @@ interface User {
 }
 
 export default function SettingsPage() {
-  const { data } = useRpc<{ user: User }>("halolink.identity.v1.AuthService/GetCurrentUser");
+  const { data } = useRpc<{ user: User }>("halomail.identity.v1.AuthService/GetCurrentUser");
   const [name, setName] = useState("");
   const [handle, setHandle] = useState("");
   const [timezone, setTimezone] = useState("");
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
   const [origin, setOrigin] = useState("");
+
+  // Keep the saved value selectable even if it is not in the browser's list.
+  const zones = useMemo(() => {
+    const all = timezones();
+    return timezone && !all.includes(timezone) ? [timezone, ...all] : all;
+  }, [timezone]);
 
   useEffect(() => setOrigin(window.location.origin), []);
   useEffect(() => {
@@ -42,7 +50,7 @@ export default function SettingsPage() {
     setSaved(false);
     try {
       const res = await rpc<{ user: User }>(
-        "halolink.identity.v1.UserService/UpdateUser",
+        "halomail.identity.v1.UserService/UpdateUser",
         { name, handle, timezone },
         getToken(),
       );
@@ -77,7 +85,20 @@ export default function SettingsPage() {
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="tz">Timezone</Label>
-                <Input id="tz" value={timezone} onChange={(e) => setTimezone(e.target.value)} placeholder="UTC" />
+                <Select id="tz" value={timezone} onChange={(e) => setTimezone(e.target.value)}>
+                  {zones.map((z) => (
+                    <option key={z} value={z}>
+                      {z}
+                    </option>
+                  ))}
+                </Select>
+                <button
+                  type="button"
+                  onClick={() => setTimezone(localTimezone())}
+                  className="text-xs text-muted-foreground underline-offset-4 hover:underline"
+                >
+                  Use my timezone ({localTimezone()})
+                </button>
               </div>
               <div className="flex items-center gap-3">
                 <Button type="submit" disabled={busy}>{busy ? "Saving…" : "Save changes"}</Button>

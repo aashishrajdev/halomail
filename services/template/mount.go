@@ -7,7 +7,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	templatev1connect "github.com/aashishrajdev/halomail/services/shared/gen/halolink/template/v1/templatev1connect"
+	templatev1connect "github.com/aashishrajdev/halomail/services/shared/gen/halomail/template/v1/templatev1connect"
 	"github.com/aashishrajdev/halomail/services/shared/authn"
 
 	"github.com/aashishrajdev/halomail/services/template/internal/adapters/postgres"

@@ -5,8 +5,8 @@ import { Card } from "@/components/ui/card";
 import { useRpc } from "@/lib/use-rpc";
 
 export default function AnalyticsPage() {
-  const bookings = useRpc<{ bookings?: unknown[] }>("halolink.scheduling.v1.BookingService/ListBookings");
-  const messages = useRpc<{ messages?: unknown[] }>("halolink.contact.v1.MessageService/ListMessages");
+  const bookings = useRpc<{ bookings?: unknown[] }>("halomail.scheduling.v1.BookingService/ListBookings");
+  const messages = useRpc<{ messages?: unknown[] }>("halomail.contact.v1.MessageService/ListMessages");
 
   const meetings = bookings.data?.bookings?.length ?? 0;
   const msgs = messages.data?.messages?.length ?? 0;

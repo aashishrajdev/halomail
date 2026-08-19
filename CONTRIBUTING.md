@@ -1,6 +1,6 @@
-# Contributing to HaloLink
+# Contributing to HaloMail
 
-Thanks for your interest in contributing! HaloLink is MIT-licensed and built to
+Thanks for your interest in contributing! HaloMail is MIT-licensed and built to
 be modular and approachable. This guide covers setup, conventions, and how to
 add new functionality.
 
@@ -72,7 +72,7 @@ The API contract lives in `proto/`. **Never hand-edit generated code** under
 1. `mkdir -p services/<name>/{cmd/server,internal/{domain,app,adapters},migrations}`.
 2. `cd services/<name> && go mod init github.com/aashishrajdev/halomail/services/<name>`.
 3. Add it to `go.work`.
-4. Define its contract in `proto/halolink/<name>/v1/<name>.proto`; run `task proto`.
+4. Define its contract in `proto/halomail/<name>/v1/<name>.proto`; run `task proto`.
 5. Copy the bootstrap pattern from an existing `cmd/server/main.go` (config, log,
    otel, health, ConnectRPC handlers via `services/shared`).
 6. Register its handler in the gateway and the monolith binary.

@@ -3,7 +3,7 @@
 Public booking pages and everything behind them.
 
 - **Dev port:** `8082`
-- **Proto:** [`proto/halolink/scheduling/v1`](../../proto/halolink/scheduling/v1/scheduling.proto)
+- **Proto:** [`proto/halomail/scheduling/v1`](../../proto/halomail/scheduling/v1/scheduling.proto)
 - **Module:** `github.com/aashishrajdev/halomail/services/scheduling`
 
 ## Services / RPCs

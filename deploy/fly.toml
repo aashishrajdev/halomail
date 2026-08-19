@@ -1,6 +1,6 @@
-# Fly.io deployment for the HaloLink backend (monolith mode).
+# Fly.io deployment for the HaloMail backend (monolith mode).
 # Secrets are set with `fly secrets set …`, never committed here.
-app = "halolink"
+app = "halomail"
 primary_region = "iad"
 
 [build]

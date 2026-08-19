@@ -5,7 +5,8 @@ version: "3"
 dotenv: [".env"]
 
 vars:
-  API_DIR: services/api
+  # The gateway hosts every service in one process (monolith mode).
+  API_DIR: services/gateway
 
 tasks:
   default:
@@ -56,6 +57,9 @@ tasks:
     cmds:
       - goose -dir services/identity/migrations -table goose_identity postgres "$DATABASE_URL" up
       - goose -dir services/scheduling/migrations -table goose_scheduling postgres "$DATABASE_URL" up
+      - goose -dir services/contact/migrations -table goose_contact postgres "$DATABASE_URL" up
+      - goose -dir services/template/migrations -table goose_template postgres "$DATABASE_URL" up
+      - goose -dir services/notification/migrations -table goose_notification postgres "$DATABASE_URL" up
   migrate:down:
     desc: Roll back the last migration for SVC — task migrate:down SVC=scheduling
     vars:
@@ -79,7 +83,7 @@ tasks:
     desc: Build the API binary
     dir: "{{.API_DIR}}"
     cmds:
-      - go build -o bin/halolink-api ./cmd/server
+      - go build -o bin/halomail-api ./cmd/server
   api:test:
     desc: Run Go tests
     dir: "{{.API_DIR}}"
@@ -96,16 +100,16 @@ tasks:
   web:
     desc: Run the Next.js web app
     cmds:
-      - pnpm --filter @halolink/web dev
+      - pnpm --filter @halomail/web dev
   docs:
     desc: Run the docs site
     cmds:
-      - pnpm --filter @halolink/docs dev
+      - pnpm --filter @halomail/docs dev
   sdk:gen:
     desc: Regenerate the TS SDK from proto
     cmds:
       - buf generate
-      - pnpm --filter @halolink/sdk build
+      - pnpm --filter @halomail/sdk build
 
   # ---- Dev (everything) ----
   dev:

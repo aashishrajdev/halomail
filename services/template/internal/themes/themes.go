@@ -64,7 +64,7 @@ func replaceVars(s string, vars map[string]string) string {
 
 // Render renders a built-in theme. Unknown kinds fall back to minimal.
 func Render(kind, subject string, vars map[string]string) (renderedSubject, renderedHTML string) {
-	subj := firstNonEmpty(replaceVars(subject, vars), vars["subject"], "Hello from HaloLink")
+	subj := firstNonEmpty(replaceVars(subject, vars), vars["subject"], "Hello from HaloMail")
 	s, ok := styles[kind]
 	if !ok {
 		s = styles[domain.ThemeMinimal]
@@ -74,7 +74,7 @@ func Render(kind, subject string, vars map[string]string) (renderedSubject, rend
 
 // RenderCustom renders author-supplied HTML with variable substitution.
 func RenderCustom(customHTML, subject string, vars map[string]string) (renderedSubject, renderedHTML string) {
-	return firstNonEmpty(replaceVars(subject, vars), "Hello from HaloLink"), replaceVars(customHTML, vars)
+	return firstNonEmpty(replaceVars(subject, vars), "Hello from HaloMail"), replaceVars(customHTML, vars)
 }
 
 func renderLayout(s style, d Data) string {
@@ -119,7 +119,7 @@ func Themes() []domain.ThemeInfo {
 		"heading":     "Your meeting is confirmed",
 		"body":        "Hi Grace,\nYour 30-minute intro call is booked for Monday at 09:00.",
 		"button_text": "Add to calendar",
-		"button_url":  "https://halolink.dev",
+		"button_url":  "https://halomail.dev",
 		"footer":      "Reschedule or cancel anytime from the link in your inbox.",
 	}
 	out := make([]domain.ThemeInfo, 0, len(domain.BuiltinThemes))
@@ -135,12 +135,12 @@ func Themes() []domain.ThemeInfo {
 
 func dataFrom(vars map[string]string) Data {
 	return Data{
-		Heading:    firstNonEmpty(vars["heading"], "Welcome to HaloLink"),
+		Heading:    firstNonEmpty(vars["heading"], "Welcome to HaloMail"),
 		Body:       firstNonEmpty(vars["body"], "This is a live preview of your email theme. Edit the heading, body, and button through template variables."),
 		ButtonText: vars["button_text"],
 		ButtonURL:  firstNonEmpty(vars["button_url"], "#"),
-		Footer:     firstNonEmpty(vars["footer"], "You're receiving this because you use HaloLink."),
-		BrandName:  firstNonEmpty(vars["brand"], "HaloLink"),
+		Footer:     firstNonEmpty(vars["footer"], "You're receiving this because you use HaloMail."),
+		BrandName:  firstNonEmpty(vars["brand"], "HaloMail"),
 	}
 }
 

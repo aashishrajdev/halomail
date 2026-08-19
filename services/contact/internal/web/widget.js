@@ -1,16 +1,16 @@
-/* HaloLink contact widget — progressive enhancement for contact forms.
+/* HaloMail contact widget — progressive enhancement for contact forms.
  *
  *   <script src="https://<api-host>/widget.js" defer></script>
- *   <form data-halolink="your-form-slug">
+ *   <form data-halomail="your-form-slug">
  *     <input name="name"><input name="email"><textarea name="message"></textarea>
  *     <input name="_hl_hp" tabindex="-1" autocomplete="off" style="display:none">
  *     <button type="submit">Send</button>
  *   </form>
  *
- * Or call directly: HaloLink.contact("slug", { name, email, data: {...} })
+ * Or call directly: HaloMail.contact("slug", { name, email, data: {...} })
  */
 (function () {
-  var ENDPOINT = "/halolink.contact.v1.MessageService/SubmitMessage";
+  var ENDPOINT = "/halomail.contact.v1.MessageService/SubmitMessage";
 
   function apiBase(el) {
     try { return new URL(el.src).origin; } catch (e) { return ""; }
@@ -31,12 +31,12 @@
   }
 
   function bind(base) {
-    document.querySelectorAll("form[data-halolink]").forEach(function (form) {
-      if (form.__halolink) return;
-      form.__halolink = true;
+    document.querySelectorAll("form[data-halomail]").forEach(function (form) {
+      if (form.__halomail) return;
+      form.__halomail = true;
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        var slug = form.getAttribute("data-halolink");
+        var slug = form.getAttribute("data-halomail");
         var data = {}, name = "", email = "", honeypot = "";
         new FormData(form).forEach(function (v, k) {
           if (k === "_hl_hp") { honeypot = v; return; }
@@ -47,11 +47,11 @@
         submit(base, slug, { name: name, email: email, data: data, honeypot: honeypot })
           .then(function (res) {
             if (res && res.redirectUrl) { window.location.href = res.redirectUrl; return; }
-            form.dispatchEvent(new CustomEvent("halolink:sent", { detail: res }));
+            form.dispatchEvent(new CustomEvent("halomail:sent", { detail: res }));
             form.reset();
           })
           .catch(function (err) {
-            form.dispatchEvent(new CustomEvent("halolink:error", { detail: err }));
+            form.dispatchEvent(new CustomEvent("halomail:error", { detail: err }));
           });
       });
     });
@@ -59,8 +59,8 @@
 
   var me = document.currentScript;
   var base = apiBase(me);
-  window.HaloLink = window.HaloLink || {};
-  window.HaloLink.contact = function (slug, payload) { return submit(base, slug, payload || {}); };
+  window.HaloMail = window.HaloMail || {};
+  window.HaloMail.contact = function (slug, payload) { return submit(base, slug, payload || {}); };
 
   if (document.readyState !== "loading") bind(base);
   else document.addEventListener("DOMContentLoaded", function () { bind(base); });

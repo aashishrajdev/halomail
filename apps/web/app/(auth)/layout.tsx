@@ -8,7 +8,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <Logo className="text-lg" />
       </Link>
       <div className="w-full max-w-sm">{children}</div>
-      <p className="mt-8 text-xs text-muted-foreground">© {new Date().getFullYear()} HaloLink</p>
+      <p className="mt-8 text-xs text-muted-foreground">© {new Date().getFullYear()} HaloMail</p>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	schedulingv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halolink/scheduling/v1/schedulingv1connect"
+	schedulingv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halomail/scheduling/v1/schedulingv1connect"
 	"github.com/aashishrajdev/halomail/services/shared/authn"
 	"github.com/aashishrajdev/halomail/services/shared/config"
 

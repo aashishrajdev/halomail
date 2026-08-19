@@ -12,7 +12,7 @@ import (
 	"github.com/aashishrajdev/halomail/services/shared/authn"
 	"github.com/aashishrajdev/halomail/services/shared/config"
 	"github.com/aashishrajdev/halomail/services/shared/connectutil"
-	notificationv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halolink/notification/v1/notificationv1connect"
+	notificationv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halomail/notification/v1/notificationv1connect"
 	"github.com/aashishrajdev/halomail/services/shared/health"
 	"github.com/aashishrajdev/halomail/services/shared/log"
 	"github.com/aashishrajdev/halomail/services/shared/observability"

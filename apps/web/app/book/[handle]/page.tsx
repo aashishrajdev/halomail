@@ -34,19 +34,19 @@ function BookingInner() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    rpc<{ user: User }>("halolink.identity.v1.UserService/GetUserByHandle", { handle: params.handle })
+    rpc<{ user: User }>("halomail.identity.v1.UserService/GetUserByHandle", { handle: params.handle })
       .then((r) => setOwner(r.user))
       .catch(() => setError("This booking page does not exist."));
   }, [params.handle]);
 
   useEffect(() => {
     if (!eventId) return;
-    rpc<{ eventType: EventType }>("halolink.scheduling.v1.EventTypeService/GetEventType", { id: eventId })
+    rpc<{ eventType: EventType }>("halomail.scheduling.v1.EventTypeService/GetEventType", { id: eventId })
       .then((r) => setEventType(r.eventType))
       .catch(() => {});
     const from = new Date();
     const to = new Date(Date.now() + 7 * 86400_000);
-    rpc<{ slots?: Slot[] }>("halolink.scheduling.v1.BookingService/ListSlots", {
+    rpc<{ slots?: Slot[] }>("halomail.scheduling.v1.BookingService/ListSlots", {
       eventTypeId: eventId, fromDate: isoDate(from), toDate: isoDate(to), inviteeTimezone: tz,
     })
       .then((r) => setSlots(r.slots ?? []))
@@ -57,7 +57,7 @@ function BookingInner() {
     e.preventDefault();
     if (!picked || !eventId) return;
     try {
-      await rpc("halolink.scheduling.v1.BookingService/CreateBooking", {
+      await rpc("halomail.scheduling.v1.BookingService/CreateBooking", {
         eventTypeId: eventId, inviteeName: name, inviteeEmail: email, inviteeTimezone: tz, start: picked.start,
       });
       setDone(true);

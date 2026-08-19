@@ -3,7 +3,7 @@
 Transactional email (Resend / SMTP) and developer webhook fan-out.
 
 - **Dev port:** `8085`
-- **Proto:** [`proto/halolink/notification/v1`](../../proto/halolink/notification/v1/notification.proto)
+- **Proto:** [`proto/halomail/notification/v1`](../../proto/halomail/notification/v1/notification.proto)
 - **Module:** `github.com/aashishrajdev/halomail/services/notification`
 
 ## Services / RPCs
@@ -25,7 +25,7 @@ SendEmail(to, subject, html, text)
 ## Webhooks
 
 - Subscriptions store a signing secret (shown once). Deliveries are signed with
-  `HMAC-SHA256` over the body in an `X-HaloLink-Signature` header.
+  `HMAC-SHA256` over the body in an `X-HaloMail-Signature` header.
 - `Dispatch(owner, event, payload)` enqueues deliveries to each matching
   subscription; a worker delivers with retries and exponential backoff.
 - Delivery attempts and status codes are recorded for the dashboard.

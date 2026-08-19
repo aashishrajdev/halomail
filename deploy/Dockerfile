@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
 #
-# Builds any HaloLink Go service (or the monolith) from the monorepo into a
+# Builds any HaloMail Go service (or the monolith) from the monorepo into a
 # tiny distroless image.
 #
-#   docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halolink-api .
+#   docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halomail-api .
 #
 # Requires generated code to be present (run `task proto` and commit, or
 # generate in CI before building).

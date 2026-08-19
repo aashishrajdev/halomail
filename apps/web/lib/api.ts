@@ -16,8 +16,8 @@ export class ApiError extends Error {
 }
 
 /**
- * rpc calls /halolink.<service>.v1.<Service>/<Method>.
- * @param procedure e.g. "halolink.identity.v1.AuthService/Login"
+ * rpc calls /halomail.<service>.v1.<Service>/<Method>.
+ * @param procedure e.g. "halomail.identity.v1.AuthService/Login"
  */
 export async function rpc<T = unknown>(
   procedure: string,

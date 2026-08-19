@@ -13,7 +13,7 @@ import (
 	"github.com/aashishrajdev/halomail/services/shared/authn"
 	"github.com/aashishrajdev/halomail/services/shared/config"
 	"github.com/aashishrajdev/halomail/services/shared/connectutil"
-	contactv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halolink/contact/v1/contactv1connect"
+	contactv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halomail/contact/v1/contactv1connect"
 	"github.com/aashishrajdev/halomail/services/shared/health"
 	"github.com/aashishrajdev/halomail/services/shared/log"
 	"github.com/aashishrajdev/halomail/services/shared/observability"

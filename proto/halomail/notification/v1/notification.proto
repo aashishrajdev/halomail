@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package halomail.notification.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Events that can trigger an outbound webhook.
+enum WebhookEvent {
+  WEBHOOK_EVENT_UNSPECIFIED = 0;
+  WEBHOOK_EVENT_BOOKING_CREATED = 1;
+  WEBHOOK_EVENT_BOOKING_CANCELLED = 2;
+  WEBHOOK_EVENT_BOOKING_RESCHEDULED = 3;
+  WEBHOOK_EVENT_MESSAGE_RECEIVED = 4;
+}
+
+enum DeliveryStatus {
+  DELIVERY_STATUS_UNSPECIFIED = 0;
+  DELIVERY_STATUS_PENDING = 1;
+  DELIVERY_STATUS_SUCCEEDED = 2;
+  DELIVERY_STATUS_FAILED = 3;
+}
+
+message Webhook {
+  string id = 1;
+  string owner_id = 2;
+  string url = 3;
+  repeated WebhookEvent events = 4;
+  // Last four chars of the signing secret.
+  string secret_last_four = 5;
+  bool active = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message WebhookDelivery {
+  string id = 1;
+  string webhook_id = 2;
+  WebhookEvent event = 3;
+  DeliveryStatus status = 4;
+  int32 response_code = 5;
+  int32 attempts = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+// ---------------------------------------------------------------------------
+// EmailService — internal transactional delivery (Resend / SMTP)
+// ---------------------------------------------------------------------------
+
+service EmailService {
+  rpc SendEmail(SendEmailRequest) returns (SendEmailResponse);
+}
+
+message SendEmailRequest {
+  repeated string to = 1;
+  string from = 2;
+  string reply_to = 3;
+  string subject = 4;
+  string html = 5;
+  string text = 6;
+}
+message SendEmailResponse {
+  string id = 1;
+  // "resend" or "smtp".
+  string provider = 2;
+}
+
+// ---------------------------------------------------------------------------
+// WebhookService — developer webhooks
+// ---------------------------------------------------------------------------
+
+service WebhookService {
+  rpc CreateWebhook(CreateWebhookRequest) returns (CreateWebhookResponse);
+  rpc ListWebhooks(ListWebhooksRequest) returns (ListWebhooksResponse);
+  rpc DeleteWebhook(DeleteWebhookRequest) returns (DeleteWebhookResponse);
+  rpc RotateSecret(RotateSecretRequest) returns (RotateSecretResponse);
+  // Dispatch is internal: other services publish events to fan out.
+  rpc Dispatch(DispatchRequest) returns (DispatchResponse);
+}
+
+message CreateWebhookRequest {
+  string url = 1;
+  repeated WebhookEvent events = 2;
+}
+message CreateWebhookResponse {
+  Webhook webhook = 1;
+  // Full signing secret — shown exactly once.
+  string secret = 2;
+}
+
+message ListWebhooksRequest {}
+message ListWebhooksResponse {
+  repeated Webhook webhooks = 1;
+}
+
+message DeleteWebhookRequest {
+  string id = 1;
+}
+message DeleteWebhookResponse {}
+
+message RotateSecretRequest {
+  string id = 1;
+}
+message RotateSecretResponse {
+  string secret = 1;
+}
+
+message DispatchRequest {
+  string owner_id = 1;
+  WebhookEvent event = 2;
+  // JSON payload delivered to subscribers.
+  string payload = 3;
+}
+message DispatchResponse {
+  int32 queued = 1;
+}

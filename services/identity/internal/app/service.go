@@ -243,6 +243,12 @@ func (s *Service) CreateAPIKey(ctx context.Context, userID, orgID, name string, 
 	}
 	secret := s.cfg.APIKeyPrefix + "live_" + raw
 
+	// api_keys.scopes is NOT NULL; a nil slice would be written as NULL and
+	// skip the column default.
+	if scopes == nil {
+		scopes = []string{}
+	}
+
 	now := s.now()
 	key := &domain.APIKey{
 		ID:         idgen.Prefixed("key_"),

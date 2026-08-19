@@ -11,7 +11,7 @@ import (
 
 	"github.com/aashishrajdev/halomail/services/shared/config"
 	"github.com/aashishrajdev/halomail/services/shared/connectutil"
-	identityv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halolink/identity/v1/identityv1connect"
+	identityv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halomail/identity/v1/identityv1connect"
 	"github.com/aashishrajdev/halomail/services/shared/health"
 	"github.com/aashishrajdev/halomail/services/shared/log"
 	"github.com/aashishrajdev/halomail/services/shared/observability"

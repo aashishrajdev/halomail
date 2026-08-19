@@ -1,6 +1,6 @@
 # shared — platform library
 
-Common building blocks every HaloLink service uses to boot consistently. Not a
+Common building blocks every HaloMail service uses to boot consistently. Not a
 running service; imported as a Go module:
 `github.com/aashishrajdev/halomail/services/shared`.
 

@@ -1,6 +1,6 @@
 # Architecture
 
-HaloLink is a **monorepo** of **modular Go microservices** behind a single public
+HaloMail is a **monorepo** of **modular Go microservices** behind a single public
 **gateway**, with a Next.js frontend and an in-house documentation site. This document explains
 the boundaries, data flow, and the design decisions that keep it cheap to run.
 
@@ -27,7 +27,7 @@ the boundaries, data flow, and the design decisions that keep it cheap to run.
         └────────────────┬┴──────────────────┘
                          ▼
                    ┌───────────┐
-                   │  HaloLink │
+                   │  HaloMail │
                    └───────────┘
                          │
         ┌────────────────┼─────────────────┐
@@ -119,7 +119,7 @@ the free-tier Dockerfile ships. **One container, one Postgres, optional Redis.**
 
 ```
 ┌─────────────────────────────┐
-│      halolink (one binary)   │  :8080
+│      halomail (one binary)   │  :8080
 │  gateway + identity + ...    │
 └─────────────────────────────┘
 ```

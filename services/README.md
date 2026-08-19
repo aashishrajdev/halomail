@@ -1,4 +1,4 @@
-# HaloLink — Backend services
+# HaloMail — Backend services
 
 The backend is a set of independent, modular Go services that share one platform
 library (`shared`) and communicate over ConnectRPC. Each service is its own Go

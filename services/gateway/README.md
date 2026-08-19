@@ -1,7 +1,7 @@
 # gateway — public edge & monolith host
 
 The gateway is the public entrypoint. In **monolith mode** (default) it hosts
-every HaloLink service in one process on one port — the single binary/container
+every HaloMail service in one process on one port — the single binary/container
 used for cheap and free-tier deployment. It also provides CORS, health probes,
 and a root info endpoint.
 
@@ -16,11 +16,11 @@ and a root info endpoint.
 /                                         info { service, mode, status }
 /healthz  /readyz                         liveness / readiness (pings Postgres)
 /widget.js                                contact embeddable widget
-/halolink.identity.v1.*/*                 identity (auth, users, api keys, audit)
-/halolink.scheduling.v1.*/*               scheduling (event types, availability, bookings, calendars)
-/halolink.contact.v1.*/*                  contact (forms, messages)
-/halolink.template.v1.*/*                 template (themes, render)
-/halolink.notification.v1.*/*             notification (email, webhooks)
+/halomail.identity.v1.*/*                 identity (auth, users, api keys, audit)
+/halomail.scheduling.v1.*/*               scheduling (event types, availability, bookings, calendars)
+/halomail.contact.v1.*/*                  contact (forms, messages)
+/halomail.template.v1.*/*                 template (themes, render)
+/halomail.notification.v1.*/*             notification (email, webhooks)
 ```
 
 Each service authenticates its own requests (Bearer JWT via `shared/authn`), so
@@ -40,8 +40,8 @@ deploy image run.
 ## Build the deploy image
 
 ```bash
-docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halolink .
-docker run -p 8080:8080 --env-file .env halolink
+docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halomail .
+docker run -p 8080:8080 --env-file .env halomail
 ```
 
 ## Distributed mode (later)

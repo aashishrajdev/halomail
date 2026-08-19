@@ -1,6 +1,6 @@
 <div align="center">
 
-# HaloLink
+# HaloMail
 
 **Open-source, API-first platform for meeting scheduling + portfolio contact forms.**
 
@@ -14,11 +14,11 @@ Minimal. Premium. Developer-focused. Deployable for free.
 
 ---
 
-## What is HaloLink?
+## What is HaloMail?
 
-HaloLink gives every user two things, behind one clean API:
+HaloMail gives every user two things, behind one clean API:
 
-1. **A public booking page** — share `halolink.dev/book/yourname`, invitees pick a
+1. **A public booking page** — share `halomail.dev/book/yourname`, invitees pick a
    slot from your real availability, and the meeting lands on your Google or
    Outlook calendar with confirmation + reschedule/cancel emails.
 2. **An embeddable contact form** — drop a `<script>` (or call the REST API / SDK)
@@ -30,7 +30,7 @@ from one definition), so the dashboard, the SDK, and your own integrations all
 speak the same contract. It ships with API keys, webhooks, audit logs, an email
 theme designer, and first-class OpenTelemetry observability.
 
-> **Names:** the project/brand is **HaloLink**; the repository is `halomail`.
+> **Names:** the project/brand is **HaloMail**; the repository is `halomail`.
 
 ## Feature tour
 
@@ -115,7 +115,7 @@ Full per-service instructions: **[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)**.
 
 ## Deploy for free
 
-HaloLink is designed to cost nothing to run at small scale:
+HaloMail is designed to cost nothing to run at small scale:
 
 - **Backend** → one container ("monolith mode") on **Fly.io** / **Render** free tier
 - **Database** → **Neon** free Postgres
@@ -138,9 +138,9 @@ Step-by-step: **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
 
 ## Contributing
 
-HaloLink is open source (MIT) and built to be contributed to. Start with
+HaloMail is open source (MIT) and built to be contributed to. Start with
 [CONTRIBUTING.md](CONTRIBUTING.md) and look for `good first issue` labels.
 
 ## License
 
-[MIT](LICENSE) — © HaloLink contributors.
+[MIT](LICENSE) — © HaloMail contributors.

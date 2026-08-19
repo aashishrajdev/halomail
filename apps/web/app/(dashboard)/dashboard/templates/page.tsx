@@ -19,14 +19,17 @@ interface Template {
 }
 
 export default function TemplatesPage() {
-  const themes = useRpc<{ themes?: Theme[] }>("halolink.template.v1.TemplateService/ListThemes");
-  const templates = useRpc<{ templates?: Template[] }>("halolink.template.v1.TemplateService/ListTemplates");
+  const themes = useRpc<{ themes?: Theme[] }>("halomail.template.v1.TemplateService/ListThemes");
+  const templates = useRpc<{ templates?: Template[] }>("halomail.template.v1.TemplateService/ListTemplates");
 
   return (
     <>
       <PageHeader title="Templates" description="Built-in email themes and your saved designs." />
 
-      <h2 className="mb-3 text-sm font-medium text-muted-foreground">Built-in themes</h2>
+      <h2 className="mb-1 text-sm font-medium text-muted-foreground">Built-in themes</h2>
+      <p className="mb-3 text-xs text-muted-foreground">
+        Preview only for now. Emails use the Minimal theme until theme selection ships.
+      </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {(themes.data?.themes ?? []).map((t) => (
           <Card key={t.kind} className="overflow-hidden">
@@ -34,15 +37,30 @@ export default function TemplatesPage() {
               <span className="text-sm font-medium">{t.name}</span>
               <Badge variant="outline">{t.kind.replace("THEME_KIND_", "").toLowerCase()}</Badge>
             </div>
-            <iframe title={t.name} srcDoc={t.previewHtml} className="h-48 w-full bg-white" sandbox="" />
+            <iframe
+              title={t.name}
+              srcDoc={t.previewHtml}
+              className="pointer-events-none h-48 w-full bg-white"
+              sandbox=""
+              tabIndex={-1}
+            />
           </Card>
         ))}
       </div>
 
-      <h2 className="mb-3 mt-8 text-sm font-medium text-muted-foreground">Your templates</h2>
+      <div className="mb-3 mt-8 flex items-center gap-2">
+        <h2 className="text-sm font-medium text-muted-foreground">Your templates</h2>
+        <Badge variant="outline">Coming soon</Badge>
+      </div>
       <Card>
         {(templates.data?.templates ?? []).length === 0 ? (
-          <p className="p-8 text-center text-sm text-muted-foreground">No saved templates yet.</p>
+          <div className="p-8 text-center">
+            <p className="text-sm font-medium">Custom templates are coming soon.</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              You'll be able to design your own email templates here and pick which one each
+              notification uses.
+            </p>
+          </div>
         ) : (
           <div className="divide-y divide-border">
             {(templates.data?.templates ?? []).map((t) => (

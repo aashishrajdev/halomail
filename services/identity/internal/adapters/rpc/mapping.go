@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	identityv1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/identity/v1"
+	identityv1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/identity/v1"
 
 	"github.com/aashishrajdev/halomail/services/identity/internal/app"
 	"github.com/aashishrajdev/halomail/services/identity/internal/domain"

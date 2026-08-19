@@ -56,7 +56,7 @@ export default function LandingPage() {
             <span className="ml-2 font-mono text-xs text-muted-foreground">book a meeting · ConnectRPC over JSON</span>
           </div>
           <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed">
-            <code>{`curl https://api.halolink.dev/halolink.scheduling.v1.BookingService/CreateBooking \\
+            <code>{`curl https://api.halomail.dev/halomail.scheduling.v1.BookingService/CreateBooking \\
   -H 'Content-Type: application/json' \\
   -d '{
     "event_type_id": "evt_...",

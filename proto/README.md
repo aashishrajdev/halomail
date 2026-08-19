@@ -1,13 +1,13 @@
 # proto — API contracts
 
-The **single source of truth** for the HaloLink API. Go servers and the
+The **single source of truth** for the HaloMail API. Go servers and the
 TypeScript SDK are generated from these `.proto` files — never the other way
 around.
 
 ## Layout
 
 ```
-proto/halolink/
+proto/halomail/
 ├─ common/v1/common.proto          # pagination, shared enums
 ├─ identity/v1/identity.proto      # auth, users, api keys, audit
 ├─ scheduling/v1/scheduling.proto  # event types, availability, bookings, calendars
@@ -35,7 +35,7 @@ Outputs (configured in [`buf.gen.yaml`](../buf.gen.yaml)):
 
 ## Conventions (buf STANDARD)
 
-- Package: `halolink.<domain>.v1`; file path mirrors the package.
+- Package: `halomail.<domain>.v1`; file path mirrors the package.
 - Every RPC `Foo` has a unique `FooRequest` / `FooResponse`.
 - Enums: zero value is `<ENUM>_UNSPECIFIED`; values are prefixed with the enum name.
 - Fields: `lower_snake_case`.

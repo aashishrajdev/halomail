@@ -1,4 +1,4 @@
-<!-- Thanks for contributing to HaloLink! -->
+<!-- Thanks for contributing to HaloMail! -->
 
 ## What & why
 

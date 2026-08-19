@@ -6,8 +6,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: {
-    default: "HaloLink — Scheduling + contact forms, one API",
-    template: "%s · HaloLink",
+    default: "HaloMail — Scheduling + contact forms, one API",
+    template: "%s · HaloMail",
   },
   description:
     "API-first platform for meeting scheduling and portfolio contact forms. Minimal, premium, developer-focused.",

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HaloLink — Documentation</title>
-<meta name="description" content="HaloLink — API-first scheduling and contact-form platform. Raw docs." />
+<title>HaloMail — Documentation</title>
+<meta name="description" content="HaloMail — API-first scheduling and contact-form platform. Raw docs." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -110,7 +110,7 @@
 </head>
 <body>
 <header>
-  <div class="brand"><span class="dot"></span> HaloLink <span class="muted" style="font-weight:400">docs</span></div>
+  <div class="brand"><span class="dot"></span> HaloMail <span class="muted" style="font-weight:400">docs</span></div>
   <nav class="nav">
     <a href="#quickstart">Quickstart</a>
     <a href="#api">API</a>
@@ -146,15 +146,15 @@
         <span class="pill">API-first</span><span class="pill">ConnectRPC</span>
         <span class="pill">Go + Next.js</span><span class="pill">MIT</span>
       </div>
-      <h1>HaloLink Documentation</h1>
+      <h1>HaloMail Documentation</h1>
       <p class="lead">An open-source platform for meeting scheduling and portfolio
       contact forms — one typed API, a generated SDK, webhooks, and a polished dashboard.</p>
-      <p class="muted" style="font-size:13px">Raw docs page — the seed of HaloLink's own docs engine. Real content, no external framework.</p>
+      <p class="muted" style="font-size:13px">Raw docs page — the seed of HaloMail's own docs engine. Real content, no external framework.</p>
     </div>
 
     <section id="intro">
       <h2>Introduction</h2>
-      <p>HaloLink gives every user a <strong>public booking page</strong> and an
+      <p>HaloMail gives every user a <strong>public booking page</strong> and an
       <strong>embeddable contact form</strong>, behind a clean
       <a href="https://connectrpc.com" target="_blank" rel="noopener" style="color:var(--accent)">ConnectRPC</a>
       API that speaks gRPC, gRPC-Web, and plain JSON from a single definition. The
@@ -217,7 +217,7 @@ task api:run        <span class="tok-c"># http://localhost:8080</span></code></p
       existing bookings (plus buffers), and busy time from connected calendars —
       sliced into the event type's duration and projected into the invitee's timezone.</p>
       <h3>List open slots <span class="muted">(public)</span></h3>
-      <pre><code><span class="tok-k">POST</span> /halolink.scheduling.v1.BookingService/ListSlots
+      <pre><code><span class="tok-k">POST</span> /halomail.scheduling.v1.BookingService/ListSlots
 <span class="tok-c"># body</span>
 { <span class="tok-s">"event_type_id"</span>: <span class="tok-s">"evt_…"</span>,
   <span class="tok-s">"from_date"</span>: <span class="tok-s">"2026-06-15"</span>,
@@ -250,18 +250,18 @@ task api:run        <span class="tok-c"># http://localhost:8080</span></code></p
       <h2>Calling the API</h2>
       <p>ConnectRPC speaks plain JSON over HTTP, so any HTTP client works — no gRPC tooling required.</p>
       <pre><code><span class="tok-c"># Log in and get a session</span>
-curl https://&lt;api-host&gt;/halolink.identity.v1.AuthService/Login \
+curl https://&lt;api-host&gt;/halomail.identity.v1.AuthService/Login \
   -H <span class="tok-s">'Content-Type: application/json'</span> \
   -d <span class="tok-s">'{"email":"me@example.com","password":"••••••"}'</span></code></pre>
       <pre><code><span class="tok-c"># Use the access token</span>
-curl https://&lt;api-host&gt;/halolink.identity.v1.UserService/GetCurrentUser \
+curl https://&lt;api-host&gt;/halomail.identity.v1.UserService/GetCurrentUser \
   -H <span class="tok-s">'Authorization: Bearer &lt;access_token&gt;'</span> \
   -H <span class="tok-s">'Content-Type: application/json'</span> -d <span class="tok-s">'{}'</span></code></pre>
     </section>
 
     <section id="endpoints">
       <h2>Endpoints</h2>
-      <p>All procedures are <code><span class="method">POST</span> /halolink.&lt;service&gt;.v1.&lt;Service&gt;/&lt;Method&gt;</code>.</p>
+      <p>All procedures are <code><span class="method">POST</span> /halomail.&lt;service&gt;.v1.&lt;Service&gt;/&lt;Method&gt;</code>.</p>
       <table>
         <tr><th>Procedure</th><th>Purpose</th><th>Auth</th></tr>
         <tr><td><code>identity.v1.AuthService/Register</code></td><td>Create account + session</td><td>none</td></tr>
@@ -279,7 +279,7 @@ curl https://&lt;api-host&gt;/halolink.identity.v1.UserService/GetCurrentUser \
       <h2>Webhooks</h2>
       <p>Subscribe to <code>booking.created</code>, <code>booking.cancelled</code>,
       <code>booking.rescheduled</code>, and <code>message.received</code>. Each delivery is
-      signed with <code>HMAC-SHA256</code> in an <code>X-HaloLink-Signature</code> header; verify it before trusting the payload.</p>
+      signed with <code>HMAC-SHA256</code> in an <code>X-HaloMail-Signature</code> header; verify it before trusting the payload.</p>
     </section>
 
     <section id="errors">
@@ -297,23 +297,23 @@ curl https://&lt;api-host&gt;/halolink.identity.v1.UserService/GetCurrentUser \
 
     <section id="selfhost">
       <h2>Self-hosting</h2>
-      <p>HaloLink is open source — run it wherever you can run a container. In
+      <p>HaloMail is open source — run it wherever you can run a container. In
       monolith mode it's a single binary backed by PostgreSQL and, optionally,
       Redis.</p>
       <pre><code><span class="tok-c"># build one image, run it anywhere</span>
-docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halolink .
-docker run -p 8080:8080 --env-file .env halolink</code></pre>
+docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halomail .
+docker run -p 8080:8080 --env-file .env halomail</code></pre>
       <p class="muted">All configuration is via environment variables — see
       <code>.env.example</code> in the repository.</p>
     </section>
 
     <hr />
-    <p class="muted" style="margin-top:24px">HaloLink is MIT-licensed and open to contributions —
+    <p class="muted" style="margin-top:24px">HaloMail is MIT-licensed and open to contributions —
     see <a href="../../CONTRIBUTING.md" style="color:var(--accent)">CONTRIBUTING.md</a>.</p>
   </main>
 </div>
 
-<footer>© 2026 HaloLink contributors · MIT · <a href="https://github.com/aashishrajdev/halomail" target="_blank" rel="noopener" style="color:var(--accent)">github.com/aashishrajdev/halomail</a></footer>
+<footer>© 2026 HaloMail contributors · MIT · <a href="https://github.com/aashishrajdev/halomail" target="_blank" rel="noopener" style="color:var(--accent)">github.com/aashishrajdev/halomail</a></footer>
 
 <script>
   // Theme toggle with persistence.

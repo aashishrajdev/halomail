@@ -1,6 +1,6 @@
 # Development guide
 
-Everything you need to run HaloLink — the whole app and each individual service —
+Everything you need to run HaloMail — the whole app and each individual service —
 on your machine.
 
 ## 1. Requirements
@@ -127,7 +127,7 @@ pnpm lint        # biome (web, docs, sdk)
 ConnectRPC speaks plain JSON over HTTP, so `curl` works:
 
 ```bash
-curl http://localhost:8080/halolink.identity.v1.AuthService/Login \
+curl http://localhost:8080/halomail.identity.v1.AuthService/Login \
   -H 'Content-Type: application/json' \
   -d '{"email":"me@example.com","password":"secret"}'
 ```

@@ -17,7 +17,7 @@ interface Message {
 }
 
 export default function MessagesPage() {
-  const { data, loading, error } = useRpc<{ messages?: Message[] }>("halolink.contact.v1.MessageService/ListMessages");
+  const { data, loading, error } = useRpc<{ messages?: Message[] }>("halomail.contact.v1.MessageService/ListMessages");
   const messages = data?.messages ?? [];
 
   return (

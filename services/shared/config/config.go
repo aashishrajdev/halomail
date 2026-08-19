@@ -26,7 +26,7 @@ type Config struct {
 
 type App struct {
 	Env          string `env:"APP_ENV" envDefault:"development"`
-	Name         string `env:"APP_NAME" envDefault:"halolink"`
+	Name         string `env:"APP_NAME" envDefault:"halomail"`
 	LogLevel     string `env:"LOG_LEVEL" envDefault:"info"`
 	LogFormat    string `env:"LOG_FORMAT" envDefault:"json"`
 	PublicAPIURL string `env:"PUBLIC_API_URL" envDefault:"http://localhost:8080"`
@@ -58,7 +58,7 @@ type Auth struct {
 
 type Email struct {
 	ResendAPIKey string `env:"RESEND_API_KEY"`
-	From         string `env:"EMAIL_FROM" envDefault:"HaloLink <noreply@halolink.dev>"`
+	From         string `env:"EMAIL_FROM" envDefault:"HaloMail <noreply@halomail.dev>"`
 	SMTPHost     string `env:"SMTP_HOST" envDefault:"localhost"`
 	SMTPPort     int    `env:"SMTP_PORT" envDefault:"1025"`
 }
@@ -83,7 +83,7 @@ type Microsoft struct {
 type OTel struct {
 	Enabled     bool    `env:"OTEL_ENABLED" envDefault:"true"`
 	Endpoint    string  `env:"OTEL_EXPORTER_OTLP_ENDPOINT" envDefault:"http://localhost:4318"`
-	ServiceName string  `env:"OTEL_SERVICE_NAME" envDefault:"halolink"`
+	ServiceName string  `env:"OTEL_SERVICE_NAME" envDefault:"halomail"`
 	SampleRatio float64 `env:"OTEL_TRACES_SAMPLER_ARG" envDefault:"1.0"`
 }
 

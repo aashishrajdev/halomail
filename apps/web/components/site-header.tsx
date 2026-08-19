@@ -10,7 +10,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link href="/" aria-label="HaloLink home">
+          <Link href="/" aria-label="HaloMail home">
             <Logo />
           </Link>
           <nav className="hidden gap-6 text-sm text-muted-foreground md:flex">

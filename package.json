@@ -1,8 +1,8 @@
 {
-  "name": "halolink",
+  "name": "halomail",
   "version": "0.0.1",
   "private": true,
-  "description": "HaloLink — API-first scheduling + contact-form platform",
+  "description": "HaloMail — API-first scheduling + contact-form platform",
   "packageManager": "pnpm@11.6.0",
   "engines": {
     "node": ">=22"
@@ -11,9 +11,9 @@
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "build": "pnpm --filter \"./apps/*\" build",
     "lint": "pnpm -r --if-present lint",
-    "web": "pnpm --filter @halolink/web",
-    "docs": "pnpm --filter @halolink/docs",
-    "sdk": "pnpm --filter @halolink/sdk",
+    "web": "pnpm --filter @halomail/web",
+    "docs": "pnpm --filter @halomail/docs",
+    "sdk": "pnpm --filter @halomail/sdk",
     "proto": "buf generate",
     "proto:lint": "buf lint"
   },

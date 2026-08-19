@@ -4,7 +4,7 @@ The email designer: built-in themes plus custom HTML, with live preview. Used by
 `scheduling` (confirmations) and `notification` (delivery).
 
 - **Dev port:** `8084`
-- **Proto:** [`proto/halolink/template/v1`](../../proto/halolink/template/v1/template.proto)
+- **Proto:** [`proto/halomail/template/v1`](../../proto/halomail/template/v1/template.proto)
 - **Module:** `github.com/aashishrajdev/halomail/services/template`
 
 ## Services / RPCs

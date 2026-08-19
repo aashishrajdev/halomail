@@ -1,4 +1,4 @@
-// Command server is the HaloLink gateway. In monolith mode (default) it hosts
+// Command server is the HaloMail gateway. In monolith mode (default) it hosts
 // every service in one process on one port — the single container used for
 // cheap/free deployment. It also provides the public edge: CORS and health.
 package main
@@ -119,7 +119,7 @@ func main() {
 func root(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(map[string]string{
-		"service": "halolink-gateway",
+		"service": "halomail-gateway",
 		"mode":    "monolith",
 		"status":  "ok",
 	})

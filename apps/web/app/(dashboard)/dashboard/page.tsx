@@ -12,10 +12,10 @@ export default function OverviewPage() {
   const [name, setName] = useState("");
   useEffect(() => setName(getUser()?.name?.split(" ")[0] ?? ""), []);
 
-  const bookings = useRpc<{ bookings?: unknown[] }>("halolink.scheduling.v1.BookingService/ListBookings");
-  const messages = useRpc<{ messages?: unknown[] }>("halolink.contact.v1.MessageService/ListMessages");
-  const forms = useRpc<{ forms?: unknown[] }>("halolink.contact.v1.FormService/ListForms");
-  const keys = useRpc<{ keys?: unknown[] }>("halolink.identity.v1.ApiKeyService/ListApiKeys");
+  const bookings = useRpc<{ bookings?: unknown[] }>("halomail.scheduling.v1.BookingService/ListBookings");
+  const messages = useRpc<{ messages?: unknown[] }>("halomail.contact.v1.MessageService/ListMessages");
+  const forms = useRpc<{ forms?: unknown[] }>("halomail.contact.v1.FormService/ListForms");
+  const keys = useRpc<{ keys?: unknown[] }>("halomail.identity.v1.ApiKeyService/ListApiKeys");
 
   const stats = [
     { label: "Meetings", value: bookings.data?.bookings?.length ?? 0, icon: CalendarClock, href: "/dashboard/meetings" },

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package halomail.common.v1;
+
+// PageRequest is the standard pagination input across list RPCs.
+message PageRequest {
+  // Max items to return (server clamps to a sane upper bound).
+  int32 page_size = 1;
+  // Opaque cursor from a previous PageResponse.next_page_token.
+  string page_token = 2;
+}
+
+// PageResponse carries pagination metadata for list RPCs.
+message PageResponse {
+  // Empty when there are no more pages.
+  string next_page_token = 1;
+  // Best-effort total count; -1 when unknown.
+  int32 total_size = 2;
+}
+
+// SortOrder is a reusable ascending/descending selector.
+enum SortOrder {
+  SORT_ORDER_UNSPECIFIED = 0;
+  SORT_ORDER_ASC = 1;
+  SORT_ORDER_DESC = 2;
+}

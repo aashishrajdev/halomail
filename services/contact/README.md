@@ -3,7 +3,7 @@
 Embeddable contact-form infrastructure for portfolios and sites.
 
 - **Dev port:** `8083`
-- **Proto:** [`proto/halolink/contact/v1`](../../proto/halolink/contact/v1/contact.proto)
+- **Proto:** [`proto/halomail/contact/v1`](../../proto/halomail/contact/v1/contact.proto)
 - **Module:** `github.com/aashishrajdev/halomail/services/contact`
 
 ## Services / RPCs

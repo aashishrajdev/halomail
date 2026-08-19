@@ -9,7 +9,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	identityv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halolink/identity/v1/identityv1connect"
+	identityv1connect "github.com/aashishrajdev/halomail/services/shared/gen/halomail/identity/v1/identityv1connect"
 
 	"github.com/aashishrajdev/halomail/services/identity/internal/adapters/postgres"
 	"github.com/aashishrajdev/halomail/services/identity/internal/adapters/rpc"

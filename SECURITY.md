@@ -16,7 +16,7 @@ triage. Responsible disclosure is appreciated — we'll credit you once a fix sh
 
 ## Supported versions
 
-HaloLink is in active alpha development; security fixes target the `main` branch.
+HaloMail is in active alpha development; security fixes target the `main` branch.
 
 ## Handling of secrets
 

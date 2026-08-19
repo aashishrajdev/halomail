@@ -1,6 +1,6 @@
 # log — structured logging
 
-The logging standard for every HaloLink service. Built on the standard library
+The logging standard for every HaloMail service. Built on the standard library
 `log/slog`, with three guarantees:
 
 1. **Trace-correlated** — every line emitted with a context carrying an active

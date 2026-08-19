@@ -1,19 +1,19 @@
-name: halolink
+name: halomail
 
 services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: halolink
-      POSTGRES_PASSWORD: halolink
-      POSTGRES_DB: halolink
+      POSTGRES_USER: halomail
+      POSTGRES_PASSWORD: halomail
+      POSTGRES_DB: halomail
     ports:
       - "5432:5432"
     volumes:
       - ./.data/postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U halolink -d halolink"]
+      test: ["CMD-SHELL", "pg_isready -U halomail -d halomail"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -44,7 +44,7 @@ services:
 
   # Traces — OTLP ingest on 4317/4318, UI on 16686.
   jaeger:
-    image: jaegertracing/all-in-one:1.62
+    image: jaegertracing/all-in-one:1.62.0
     restart: unless-stopped
     environment:
       COLLECTOR_OTLP_ENABLED: "true"

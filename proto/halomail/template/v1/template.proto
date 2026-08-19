@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package halomail.template.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Built-in design systems for transactional email.
+enum ThemeKind {
+  THEME_KIND_UNSPECIFIED = 0;
+  THEME_KIND_MINIMAL = 1;
+  THEME_KIND_APPLE = 2;
+  THEME_KIND_NOTION = 3;
+  THEME_KIND_GLASS = 4;
+  THEME_KIND_TERMINAL = 5;
+  // Author-supplied HTML rather than a built-in theme.
+  THEME_KIND_CUSTOM = 6;
+}
+
+// Theme is a built-in, read-only design.
+message Theme {
+  ThemeKind kind = 1;
+  string name = 2;
+  string description = 3;
+  // Rendered sample HTML for the live preview.
+  string preview_html = 4;
+}
+
+// Template is a user-owned, saved email design.
+message Template {
+  string id = 1;
+  string owner_id = 2;
+  string name = 3;
+  ThemeKind theme = 4;
+  string subject = 5;
+  // Used only when theme == THEME_KIND_CUSTOM. Supports {{variables}}.
+  string custom_html = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+service TemplateService {
+  rpc ListThemes(ListThemesRequest) returns (ListThemesResponse);
+  rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse);
+  rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse);
+  rpc CreateTemplate(CreateTemplateRequest) returns (CreateTemplateResponse);
+  rpc UpdateTemplate(UpdateTemplateRequest) returns (UpdateTemplateResponse);
+  rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse);
+  // RenderPreview renders a theme or custom HTML with sample variables.
+  rpc RenderPreview(RenderPreviewRequest) returns (RenderPreviewResponse);
+}
+
+message ListThemesRequest {}
+message ListThemesResponse {
+  repeated Theme themes = 1;
+}
+
+message ListTemplatesRequest {}
+message ListTemplatesResponse {
+  repeated Template templates = 1;
+}
+
+message GetTemplateRequest {
+  string id = 1;
+}
+message GetTemplateResponse {
+  Template template = 1;
+}
+
+message CreateTemplateRequest {
+  string name = 1;
+  ThemeKind theme = 2;
+  string subject = 3;
+  string custom_html = 4;
+}
+message CreateTemplateResponse {
+  Template template = 1;
+}
+
+message UpdateTemplateRequest {
+  string id = 1;
+  string name = 2;
+  ThemeKind theme = 3;
+  string subject = 4;
+  string custom_html = 5;
+}
+message UpdateTemplateResponse {
+  Template template = 1;
+}
+
+message DeleteTemplateRequest {
+  string id = 1;
+}
+message DeleteTemplateResponse {}
+
+message RenderPreviewRequest {
+  ThemeKind theme = 1;
+  string subject = 2;
+  string custom_html = 3;
+  // Variable substitutions, e.g. {"name": "Ada"}.
+  map<string, string> variables = 4;
+}
+message RenderPreviewResponse {
+  string subject = 1;
+  string html = 2;
+}

@@ -10,8 +10,8 @@ import (
 
 	"connectrpc.com/connect"
 
-	commonv1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/common/v1"
-	schedulingv1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/scheduling/v1"
+	commonv1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/common/v1"
+	schedulingv1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/scheduling/v1"
 
 	"github.com/aashishrajdev/halomail/services/scheduling/internal/app"
 	"github.com/aashishrajdev/halomail/services/shared/authn"

@@ -1,7 +1,7 @@
 // Package ratelimit provides a small rate limiter with two interchangeable
 // backends: Redis (shared across instances) and in-memory (per instance).
 //
-// This is what lets HaloLink run without Redis on free tiers: when no Redis
+// This is what lets HaloMail run without Redis on free tiers: when no Redis
 // client is supplied, New falls back to the in-memory limiter.
 package ratelimit
 

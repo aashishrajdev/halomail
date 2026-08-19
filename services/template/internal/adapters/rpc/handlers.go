@@ -7,7 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	templatev1 "github.com/aashishrajdev/halomail/services/shared/gen/halolink/template/v1"
+	templatev1 "github.com/aashishrajdev/halomail/services/shared/gen/halomail/template/v1"
 
 	"github.com/aashishrajdev/halomail/services/template/internal/app"
 	"github.com/aashishrajdev/halomail/services/shared/authn"

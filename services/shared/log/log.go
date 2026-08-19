@@ -1,4 +1,4 @@
-// Package log builds the structured slog logger used across every HaloLink
+// Package log builds the structured slog logger used across every HaloMail
 // service. Output is JSON in production and human-readable text in dev; every
 // line carries service metadata, is auto-correlated with the active
 // OpenTelemetry trace (trace_id/span_id), and has sensitive fields redacted.

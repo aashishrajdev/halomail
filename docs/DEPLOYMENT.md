@@ -1,6 +1,6 @@
 # Deployment — free & low-cost
 
-HaloLink is designed to run at **$0/month** at small scale by using free tiers and
+HaloMail is designed to run at **$0/month** at small scale by using free tiers and
 **monolith mode** (one container instead of six). Scale to distributed services
 only when you actually need to.
 
@@ -41,7 +41,7 @@ in-memory limiter.
 ## 3. Email — Resend
 
 Create an API key and verify your sending domain. Set `RESEND_API_KEY` and
-`EMAIL_FROM="HaloLink <noreply@yourdomain>"`. Without a key, the notification
+`EMAIL_FROM="HaloMail <noreply@yourdomain>"`. Without a key, the notification
 service falls back to SMTP (`SMTP_HOST`/`SMTP_PORT`).
 
 ## 4. Backend container
@@ -50,8 +50,8 @@ A single multi-stage Dockerfile builds any service (or the monolith):
 
 ```bash
 # Build the all-in-one monolith image (cheapest)
-docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halolink-api .
-docker run -p 8080:8080 --env-file .env halolink-api
+docker build -f deploy/Dockerfile --build-arg SERVICE=gateway -t halomail-api .
+docker run -p 8080:8080 --env-file .env halomail-api
 ```
 
 Image is distroless + static binary → tiny and fast to cold-start.
@@ -65,7 +65,7 @@ fly secrets set \
   DATABASE_URL="postgres://…neon…?sslmode=require" \
   REDIS_URL="rediss://…upstash…" \
   RESEND_API_KEY="re_…" \
-  EMAIL_FROM="HaloLink <noreply@yourdomain>"
+  EMAIL_FROM="HaloMail <noreply@yourdomain>"
 fly deploy
 ```
 
@@ -115,7 +115,7 @@ JWT_SECRET=<32+ byte secret>
 DATABASE_URL=<neon pooled url, sslmode=require>
 REDIS_URL=<upstash url, or empty>
 RESEND_API_KEY=<resend key>
-EMAIL_FROM="HaloLink <noreply@yourdomain>"
+EMAIL_FROM="HaloMail <noreply@yourdomain>"
 PUBLIC_API_URL=https://<api-host>
 PUBLIC_WEB_URL=https://<web-host>
 OTEL_ENABLED=true
