@@ -6,6 +6,7 @@ services:
     name: halomail-api
     runtime: docker
     plan: free
+    region: singapore
     dockerfilePath: ./deploy/Dockerfile
     dockerContext: .
     healthCheckPath: /healthz
@@ -16,8 +17,12 @@ services:
         value: "8080"
       - key: LOG_FORMAT
         value: json
+      # No OTLP collector on the free plan; true would retry against
+      # localhost:4318 on every span.
       - key: OTEL_ENABLED
-        value: "true"
+        value: "false"
+      - key: LOG_LEVEL
+        value: info
       - key: DATABASE_URL
         sync: false
       - key: REDIS_URL
